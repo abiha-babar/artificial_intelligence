@@ -13,8 +13,6 @@ class Graph:
         return H[n]
 
     def a_star_algorithm(self, start, stop):
-        print()
-
         open_lst = set([start])
 
         closed_lst = set([])
@@ -42,12 +40,22 @@ class Graph:
                 reconst_path.reverse()
 
                 print("Path found: {}".format(reconst_path))
+                return reconst_path
 
             # code here
+            open_lst.remove(n)
+            closed_lst.add(n)
+            for (m, weight) in self.get_neighbors(n):
+                if m not in closed_lst:
+                    if m not in open_lst:
+                        open_lst.add(m)
+                    if poo[n] + weight < poo.get(m, float("inf")):
+                        poo[m] = poo[n] + weight
+                        par[m] = n
 
-            print("Path does not exist!")
+        print("Path does not exist!")
 
-            return None
+        return None
 
 
 adjac_lis = {"A": [("B", 1), ("C", 3), ("D", 7)], "B": [("D", 5)], "C": [("D", 12)]}
